@@ -29,6 +29,7 @@ void ofApp::setup(){
 	previewCam.setNearClip(0.7);
 
 	// Set up render environment
+	image.allocate(imageWidth, imageHeight, OF_IMAGE_COLOR);
 	ball1 = new Sphere(vec3(3, 0, -1.1), 2.0f, ofColor(50, 40, 220));
 	ball2 = new Sphere(vec3(-1.8, -1, -3.1), 3.0f, ofColor(200, 50, 50));
 	ball3 = new Sphere(vec3(.3, -.5, 1.2), 1.5f, ofColor::gold);
@@ -95,7 +96,7 @@ void ofApp::draw(){
 	theCam->end();
 
 	// Raytrace the scene onto an OfImage
-	rayTrace();
+	//rayTrace();
 
 	// Framerate
 	string str;
@@ -107,13 +108,19 @@ void ofApp::draw(){
 // Ray trace scene objects onto viewplane
 //
 void ofApp::rayTrace() {
-	image.allocate(imageWidth, imageHeight, OF_IMAGE_COLOR);
 
 	// Loop through the pixel indexes and set the color
 	// according to the ray tracing values
 	for (int i = 0; i < imageWidth; i++) {
 		for (int j = 0; j < imageHeight; i++) {
-			image.setColor(i, j, ofColor::white);
+			Ray ray = renderCam.getRay((i + .5) / imageWidth, (j + .5) / imageHeight);
+
+			// Check against the sceneobject vector for collisions
+			for (SceneObject *obj : scene) {
+				glm::vec3 normal;
+			}
+
+			//image.setColor(i, j, ofColor::white);
 		}
 	}
 
